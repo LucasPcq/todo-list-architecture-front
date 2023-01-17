@@ -8,7 +8,7 @@ On peut donc retrouver sur ce repo une VSA ( Vertical Slice Architecture ) ainsi
 
 ## Installation
 
-- Ne pas oublier de faire l'installation de l'API également !
+- [Installation API](https://github.com/LucasPcq/todo-list-architecture-back.git)
 
 ```bash
 git clone https://github.com/LucasPcq/todo-list-architecture-front.git
