@@ -5,7 +5,7 @@ import { Todo } from "@/modules/todos/core/domain";
 
 import FormTodo from "@/modules/todos/components/Form/FormTodo.vue";
 
-const { updateTodo } = useTodoStore();
+const todoStore = useTodoStore();
 
 const emits = defineEmits(["todoUpdated"]);
 
@@ -14,7 +14,7 @@ const props = defineProps<{
 }>();
 
 const updateCurrentTodo = (values: { label: string; endDate: string }) => {
-  updateTodo(props.todo.id, values);
+  // Mettre ici le code pour implementer la mise a jour du todo
   emits("todoUpdated");
 };
 </script>

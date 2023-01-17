@@ -3,12 +3,7 @@ import { defineStore } from "pinia";
 import { match } from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 
-import {
-  Todo,
-  todoUseCase,
-  InsertTodoDto,
-  UpdateTodoDto,
-} from "@/modules/todos/core/domain";
+import { Todo, todoUseCase, InsertTodoDto } from "@/modules/todos/core/domain";
 
 interface State {
   todoList: Todo[];
@@ -117,29 +112,6 @@ export const useTodoStore = defineStore("todo", {
       return pipe(
         await todoUseCase.addTodo(insertTodoDto),
         match(matchError, matchTodoInserted)
-      );
-    },
-    async updateTodo(id: number, updateTodoDto: UpdateTodoDto) {
-      this.$patch((state) => (state.error = ""));
-
-      const matchError = (error: string) => {
-        this.$patch((state) => {
-          state.error = error;
-        });
-      };
-
-      const matchTodoUpdated = (todoUpdated: Todo) => {
-        const todoToUpdateIndex = this.todoList.findIndex(
-          (todo) => todo.id === id
-        );
-        this.$patch((state) => {
-          state.todoList.splice(todoToUpdateIndex, 1, todoUpdated);
-        });
-      };
-
-      return pipe(
-        await todoUseCase.updateTodoById(id, updateTodoDto),
-        match(matchError, matchTodoUpdated)
       );
     },
     async deleteTodo(id: number) {

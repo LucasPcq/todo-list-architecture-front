@@ -1,11 +1,6 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 
-import {
-  Todo,
-  FetchTodoDto,
-  InsertTodoDto,
-  UpdateTodoDto,
-} from "@/modules/todos/core/domain";
+import { Todo, FetchTodoDto, InsertTodoDto } from "@/modules/todos/core/domain";
 
 import {
   mapFetchTodoDtoToTodo,
@@ -22,7 +17,6 @@ export interface ITodoRepository {
   fetchTodos: () => ResponseTodos;
   fetchTodoById: (id: number) => ResponseTodo;
   insertTodo: (insertTodoDto: InsertTodoDto) => ResponseTodo;
-  updateTodoById: (id: number, updateTodoDto: UpdateTodoDto) => ResponseTodo;
   deleteTodoById: (id: number) => ResponseVoid;
   deleteAllTodos: () => ResponseVoid;
 }
@@ -49,18 +43,6 @@ export const todoRepository = (http: IAPIClient): ITodoRepository => ({
   insertTodo: async (insertTodoDto: InsertTodoDto): ResponseTodo => {
     try {
       const data = await http.post<FetchTodoDto>(`todos`, insertTodoDto);
-      return right(mapFetchTodoDtoToTodo(data));
-    } catch (error: any) {
-      // TODO: Gestion d'erreur
-      return left(error.message);
-    }
-  },
-  updateTodoById: async (
-    id: number,
-    updateTodoDto: UpdateTodoDto
-  ): ResponseTodo => {
-    try {
-      const data = await http.patch<FetchTodoDto>(`todos/${id}`, updateTodoDto);
       return right(mapFetchTodoDtoToTodo(data));
     } catch (error: any) {
       // TODO: Gestion d'erreur

@@ -10,7 +10,7 @@ import { useTodoStore } from "@/modules/todos/store/todo";
 import UpdateTodo from "@/modules/todos/components/UpdateTodo.vue";
 import Button from "@/shared/components/Button.vue";
 
-const { deleteTodo, updateTodo } = useTodoStore();
+const { deleteTodo } = useTodoStore();
 
 const props = defineProps<{
   todo: Todo;
@@ -29,6 +29,10 @@ const iconUpdateStatusTodo = computed(() =>
 const endDateFormatted = computed(() => {
   return format(props.todo.endDate, "dd/MM/yyyy");
 });
+
+const updateTodoStatus = () => {
+  // Mettre ici le code pour implementer la mise a jour du isCompleted du todo
+};
 </script>
 
 <template>
@@ -42,7 +46,7 @@ const endDateFormatted = computed(() => {
     <div class="item-actions" v-if="!editingMode">
       <button
         class="button-with-icon action-update-status-todo"
-        @click="updateTodo(todo.id, { isCompleted: !todo.isCompleted })"
+        @click="updateTodoStatus"
       >
         <Icon :icon="iconUpdateStatusTodo" />
       </button>
