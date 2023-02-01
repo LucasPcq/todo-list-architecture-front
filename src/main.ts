@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { VueQueryPlugin } from "@tanstack/vue-query";
 
 import App from "./App.vue";
 
@@ -13,11 +14,6 @@ const routes: Array<RouteRecordRaw> = [
     name: "TodoHome",
     component: () => import("@/modules/todos/views/TodoHome.vue"),
   },
-  {
-    path: "/todos/:id",
-    name: "TodoUpdate",
-    component: () => import("@/modules/todos/views/TodoUpdate.vue"),
-  },
 ];
 
 const router = createRouter({
@@ -25,6 +21,7 @@ const router = createRouter({
   routes,
 });
 
+app.use(VueQueryPlugin);
 app.use(router);
 app.use(pinia);
 app.mount("#app");

@@ -19,6 +19,7 @@ export type ResponseTodos = Promise<Either<string, Todo[]>>;
 export type ResponseVoid = Promise<Either<string, void>>;
 
 export interface ITodoRepository {
+  fetchTodosTanstack: () => Promise<Todo[]>;
   fetchTodos: () => ResponseTodos;
   fetchTodoById: (id: number) => ResponseTodo;
   insertTodo: (insertTodoDto: InsertTodoDto) => ResponseTodo;
@@ -28,6 +29,14 @@ export interface ITodoRepository {
 }
 
 export const todoRepository = (http: IAPIClient): ITodoRepository => ({
+  fetchTodosTanstack: async (): Promise<Todo[]> => {
+    try {
+      const data = await http.get<FetchTodoDto[]>("todos");
+      return mapFetchTodosDtoToTodos(data);
+    } catch (error: any) {
+      throw error;
+    }
+  },
   fetchTodos: async (): ResponseTodos => {
     try {
       const data = await http.get<FetchTodoDto[]>("todos");

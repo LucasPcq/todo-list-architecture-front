@@ -21,12 +21,14 @@ import {
 
 import { axiosClient } from "@/shared/adapters";
 import { config } from "@/shared/config";
+import { getTodosTanstack } from "./use-cases/get-todos-tanstack";
 
 /* REPOSITORY & USE CASES */
 
 const repository = todoRepository(axiosClient(config.apiUrl));
 
 export interface ITodoUseCase {
+  getTodosTanstack: () => Promise<Todo[]>;
   getTodos: () => ResponseTodos;
   getTodoById: (id: number) => ResponseTodo;
   addTodo: (insertTodoDto: InsertTodoDto) => ResponseTodo;
@@ -36,6 +38,7 @@ export interface ITodoUseCase {
 }
 
 export const todoUseCase: ITodoUseCase = {
+  getTodosTanstack: getTodosTanstack(repository),
   getTodos: getTodos(repository),
   getTodoById: getTodoById(repository),
   addTodo: addTodo(repository),
